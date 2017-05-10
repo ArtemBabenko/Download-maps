@@ -36,9 +36,10 @@
         android:text="@string/world_regions"/>
 
     <android.support.v7.widget.RecyclerView
-        android:layout_marginTop="10dp"
+        android:id="@+id/continent_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/world_region"/>
+        android:layout_below="@+id/world_region"
+        android:layout_alignParentStart="true"/>
 </RelativeLayout>
 

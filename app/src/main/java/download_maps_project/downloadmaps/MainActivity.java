@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.StatFs;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -28,11 +30,14 @@ public class MainActivity extends AppCompatActivity {
     private String name_Country;
     private String name_City;
     private ArrayList<Continent> arrayContinent = new ArrayList<>();
-    private ArrayList<Country> arrayCountry = new ArrayList<>();
-    private ArrayList<City> arrayCity = new ArrayList<>();
+    private ArrayList<Country> arrayCountry;
+    private ArrayList<City> arrayCity;
     private Continent continent;
     private Country country;
     private City city;
+
+    private RecyclerView recycler;
+    private ContinentAdapter continentAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,19 +45,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         progressBar = (ProgressBar) findViewById(R.id.pb_horizontal);
         freeSize = (TextView) findViewById(R.id.devise_text_freeSize);
+        recycler = (RecyclerView) findViewById(R.id.continent_recycler);
         takeMemory();
         takeFreeMemory();
         postProggres();
         prepareXpp();
-
         parser();
-        System.out.println(arrayContinent.size());
-        System.out.println(arrayCountry.size());
-        for (Continent continent : arrayContinent) {
-            System.out.println(continent.getName() + " : " + continent.getArrayCountry().size());
-
-        }
-//        inputMap();
+        createRecycler();
+//        System.out.println(arrayContinent.size());
+//        System.out.println(arrayCountry.size());
+//        for (Continent continent : arrayContinent) {
+//            System.out.println(continent.getName() + " | Number of countries - " + continent.getArrayCountry().size());
+//            for (Country country : continent.getArrayCountry()) {
+//                System.out.println("-- " + country.getName() + " | Number of cities - " + country.getArrayCity().size());
+//            }
+//        }
     }
 
     private long takeMemory() {
@@ -96,11 +103,11 @@ public class MainActivity extends AppCompatActivity {
 
             while (xpp.getEventType() != XmlPullParser.END_DOCUMENT) {
                 switch (xpp.getEventType()) {
-                    // начало документа
+                    // start document
                     case XmlPullParser.START_DOCUMENT:
                         Log.d(LOG_TAG, "START_DOCUMENT");
                         break;
-                    // начало тэга
+                    // start tag
                     case XmlPullParser.START_TAG:
                         tmp = "";
                         depth++;
@@ -112,9 +119,10 @@ public class MainActivity extends AppCompatActivity {
                             tmp = tmp + xpp.getAttributeName(i) + " = " + xpp.getAttributeValue(i) + ", ";
                             if (xpp.getAttributeName(i).equals("name") && depth == 2) {
                                 name_Continent = xpp.getAttributeValue(i);
-                            }
-                            if (xpp.getAttributeName(i).equals("name") && depth == 3) {
+                            } else if (xpp.getAttributeName(i).equals("name") && depth == 3) {
                                 name_Country = xpp.getAttributeValue(i);
+                            } else if (xpp.getAttributeName(i).equals("name") && depth == 4) {
+                                name_City = xpp.getAttributeValue(i);
                             }
                         }
 
@@ -122,33 +130,41 @@ public class MainActivity extends AppCompatActivity {
                             System.out.println("Open ContList");
                         } else if (depth == 2) {
                             System.out.println("Open Continent");
+                            arrayCountry = new ArrayList<>();
                             arrayCountry.clear();
                         } else if (depth == 3) {
                             System.out.println("Open country");
-                            System.out.println("Size arrayCountry in start Continent " + arrayCountry.size());
+                            arrayCity = new ArrayList<>();
+                            arrayCity.clear();
+                        } else if (depth == 4) {
+                            System.out.println("Open City");
                         }
 
                         break;
-                    // конец тэга
+                    // end tag
                     case XmlPullParser.END_TAG:
+
                         if (depth == 1) {
                             System.out.println("Close ContList");
                         } else if (depth == 2) {
                             System.out.println("Close Continent");
                             System.out.println("Size arrayCountry in finish Continent " + arrayCountry.size());
-                            /*
-                            Wtf! Когда проверяю на размер списка, то он есть. Добавляю в объект и вытаскиваю, то он равен 0.
-                             */
-                            arrayContinent.add(new Continent(name_Continent, arrayCountry));
+                            continent = new Continent(name_Continent, arrayCountry);
+                            arrayContinent.add(continent);
                         } else if (depth == 3) {
                             System.out.println("Close Country");
                             country = new Country(name_Country, arrayCity);
                             arrayCountry.add(country);
+                        } else if (depth == 4) {
+                            System.out.println("Close City");
+                            city = new City(name_City, "yes");
+                            arrayCity.add(city);
                         }
+
                         depth--;
                         Log.d(LOG_TAG, "END_TAG: name = " + xpp.getName());
                         break;
-                    // содержимое тэга
+                    // content tag
                     case XmlPullParser.TEXT:
                         Log.d(LOG_TAG, "text = " + xpp.getText());
                         break;
@@ -156,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
                     default:
                         break;
                 }
-                // следующий элемент
+                // next element
                 xpp.next();
             }
             Log.d(LOG_TAG, "END_DOCUMENT");
@@ -170,6 +186,16 @@ public class MainActivity extends AppCompatActivity {
 
     XmlPullParser prepareXpp() {
         return getResources().getXml(R.xml.region_data);
+    }
+
+    private void createRecycler(){
+        recycler = (RecyclerView) findViewById(R.id.continent_recycler);
+        RecyclerView.LayoutManager layoutMenager = new LinearLayoutManager(this);
+        recycler.setLayoutManager(layoutMenager);
+        recycler.setHasFixedSize(true);
+        continentAdapter = new ContinentAdapter(arrayContinent,this);
+        recycler.setAdapter(continentAdapter);
+        continentAdapter.notifyDataSetChanged();
     }
 
 }

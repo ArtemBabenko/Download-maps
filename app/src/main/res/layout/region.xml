@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/region_layout"
+                android:id="@+id/continent_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/locations"
+        android:id="@+id/continent_cv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:foreground="?selectableItemBackground"
@@ -28,7 +28,7 @@
                 android:backgroundTint="@color/colorCardIcon"/>
 
             <TextView
-                android:id="@+id/name_region"
+                android:id="@+id/name_continent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
