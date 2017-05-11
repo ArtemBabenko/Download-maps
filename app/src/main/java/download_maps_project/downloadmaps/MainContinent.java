@@ -6,6 +6,7 @@ import android.os.StatFs;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -17,15 +18,24 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import download_maps_project.downloadmaps.Adapter.ContinentAdapter;
+import download_maps_project.downloadmaps.Models.City;
+import download_maps_project.downloadmaps.Models.Continent;
+import download_maps_project.downloadmaps.Models.Country;
 
-public class MainActivity extends AppCompatActivity {
+import static download_maps_project.downloadmaps.R.string.app_name;
+
+
+public class MainContinent extends AppCompatActivity {
 
     final String LOG_TAG = "myLogs";
 
+    private Toolbar toolbar;
+
     private ProgressBar progressBar;
+
     private TextView freeSize;
     private String tmp = " ";
-    private String name_Split;
     private String name_Continent;
     private String name_Country;
     private String name_City;
@@ -46,20 +56,13 @@ public class MainActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.pb_horizontal);
         freeSize = (TextView) findViewById(R.id.devise_text_freeSize);
         recycler = (RecyclerView) findViewById(R.id.continent_recycler);
+        initToolbar();
         takeMemory();
         takeFreeMemory();
         postProggres();
         prepareXpp();
         parser();
         createRecycler();
-//        System.out.println(arrayContinent.size());
-//        System.out.println(arrayCountry.size());
-//        for (Continent continent : arrayContinent) {
-//            System.out.println(continent.getName() + " | Number of countries - " + continent.getArrayCountry().size());
-//            for (Country country : continent.getArrayCountry()) {
-//                System.out.println("-- " + country.getName() + " | Number of cities - " + country.getArrayCity().size());
-//            }
-//        }
     }
 
     private long takeMemory() {
@@ -188,14 +191,19 @@ public class MainActivity extends AppCompatActivity {
         return getResources().getXml(R.xml.region_data);
     }
 
-    private void createRecycler(){
+    private void createRecycler() {
         recycler = (RecyclerView) findViewById(R.id.continent_recycler);
         RecyclerView.LayoutManager layoutMenager = new LinearLayoutManager(this);
         recycler.setLayoutManager(layoutMenager);
         recycler.setHasFixedSize(true);
-        continentAdapter = new ContinentAdapter(arrayContinent,this);
+        continentAdapter = new ContinentAdapter(arrayContinent, this);
         recycler.setAdapter(continentAdapter);
         continentAdapter.notifyDataSetChanged();
+    }
+
+    private void initToolbar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(app_name);
     }
 
 }

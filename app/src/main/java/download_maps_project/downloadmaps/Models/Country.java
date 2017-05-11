@@ -1,8 +1,11 @@
-package download_maps_project.downloadmaps;
+package download_maps_project.downloadmaps.Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Country {
+import download_maps_project.downloadmaps.Models.City;
+
+public class Country implements Serializable {
     private String name;
     private ArrayList<City> arrayCity;
 

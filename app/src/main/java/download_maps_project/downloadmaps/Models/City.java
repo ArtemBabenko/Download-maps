@@ -1,6 +1,8 @@
-package download_maps_project.downloadmaps;
+package download_maps_project.downloadmaps.Models;
 
-public class City {
+import java.io.Serializable;
+
+public class City implements Serializable {
     private String name;
     private String map;
 

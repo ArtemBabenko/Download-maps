@@ -1,45 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp">
+                android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/device_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/deice_memory"
-        android:textColor="@color/colorTextInCard"/>
+    <include layout="@layout/toolbar"/>
 
-    <TextView
-        android:id="@+id/devise_text_freeSize"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:text="FreeSize"
-        android:textColor="@color/colorTextInCard"/>
-
-    <ProgressBar
-        android:id="@+id/pb_horizontal"
-        style="@android:style/Widget.ProgressBar.Horizontal"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/device_text"
-        android:layout_marginTop="10dp"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_margin="10dp">
 
-    <TextView
-        android:layout_marginTop="20dp"
-        android:id="@+id/world_region"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/pb_horizontal"
-        android:text="@string/world_regions"/>
+        <TextView
+            android:id="@+id/device_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/deice_memory"
+            android:textColor="@color/colorTextInCard"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/continent_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/world_region"
-        android:layout_alignParentStart="true"/>
+        <TextView
+            android:id="@+id/devise_text_freeSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="FreeSize"
+            android:textColor="@color/colorTextInCard"/>
+
+        <ProgressBar
+            android:id="@+id/pb_horizontal"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/device_text"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/world_region"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pb_horizontal"
+            android:layout_marginTop="20dp"
+            android:text="@string/world_regions"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/continent_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/world_region"/>
+    </RelativeLayout>
 </RelativeLayout>
 

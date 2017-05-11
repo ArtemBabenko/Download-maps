@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/location_layout"
+                android:id="@+id/city_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/country_cv"
+        android:id="@+id/city_cv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:foreground="?selectableItemBackground"
@@ -20,7 +20,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/map"
+                android:id="@+id/map_city"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -28,18 +28,18 @@
                 android:backgroundTint="@color/colorCardIcon"/>
 
             <TextView
-                android:id="@+id/name_country"
+                android:id="@+id/name_city"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_margin="10dp"
-                android:layout_toRightOf="@+id/map"
+                android:layout_toRightOf="@+id/map_city"
                 android:text="Name Location"
                 android:textColor="@color/colorTextInCard"
                 />
 
             <ImageView
-                android:id="@+id/map_download"
+                android:id="@+id/map_city_download"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

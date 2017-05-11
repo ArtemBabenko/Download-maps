@@ -1,8 +1,10 @@
-package download_maps_project.downloadmaps;
+package download_maps_project.downloadmaps.Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Continent {
+public class Continent implements Serializable {
+
     private String name;
     private ArrayList<Country> arrayCountry;
 
